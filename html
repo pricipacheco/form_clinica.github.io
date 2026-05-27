@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ficha Clínica — Clínica Odontológica</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:linear-gradient(160deg,#f0f4f2 0%,#e8f0ec 60%,#dce8e2 100%);min-height:100vh;padding:2rem 1rem 3rem}
+
+.form-card{max-width:640px;margin:0 auto;background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 8px 40px rgba(15,70,56,0.12)}
+
+.form-header{background:linear-gradient(135deg,#0f4638 0%,#1a6e52 60%,#2a9d75 100%);padding:2.5rem 2.5rem 2rem;position:relative;overflow:hidden}
+.hd1{position:absolute;top:-30px;right:-30px;width:140px;height:140px;border-radius:50%;border:2px solid rgba(255,255,255,0.08)}
+.hd2{position:absolute;bottom:-40px;left:40px;width:80px;height:80px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.06)}
+
+.clinic-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:30px;padding:5px 14px;font-size:11px;letter-spacing:0.08em;color:rgba(255,255,255,0.85);text-transform:uppercase;margin-bottom:1.2rem}
+.form-title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;color:#fff;line-height:1.2;margin-bottom:.6rem}
+.form-subtitle{font-size:13px;color:rgba(255,255,255,0.7);line-height:1.6}
+.progress-wrap{background:rgba(255,255,255,0.15);border-radius:4px;height:3px;margin-top:1.6rem}
+.progress-fill{height:100%;background:rgba(255,255,255,0.85);border-radius:4px;transition:width .4s ease;width:0%}
+.progress-lbl{font-size:11px;color:rgba(255,255,255,0.55);margin-top:6px;text-align:right}
+
+.form-body{padding:2rem 2.5rem 2.5rem}
+.info-pill{display:inline-flex;align-items:center;gap:6px;background:#e8f4ee;color:#1a6e52;border-radius:20px;padding:5px 12px;font-size:11px;margin-bottom:1.2rem;font-weight:500}
+.section-lbl{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#1a6e52;font-weight:500;margin:1.8rem 0 1rem;display:flex;align-items:center;gap:8px}
+.section-lbl::after{content:'';flex:1;height:1px;background:#e8f0ec}
+.field-group{margin-bottom:1.4rem}
+.field-label{display:block;font-size:13px;font-weight:500;color:#1c3a2e;margin-bottom:8px;line-height:1.4}
+.field-label .req{color:#2a9d75;margin-left:2px}
+.text-input{width:100%;padding:11px 14px;font-family:'DM Sans',sans-serif;font-size:14px;color:#1c3a2e;background:#f8faf9;border:1.5px solid #d4e4dd;border-radius:10px;outline:none;transition:border .2s,background .2s,box-shadow .2s;appearance:none}
+.text-input:focus{border-color:#1a6e52;background:#fff;box-shadow:0 0 0 3px rgba(26,110,82,0.08)}
+.text-input::placeholder{color:#a8bdb6;font-size:13px}
+.radio-group{display:flex;gap:10px;flex-wrap:wrap}
+.radio-label{flex:1;min-width:100px;cursor:pointer;position:relative}
+.radio-label input[type=radio]{position:absolute;opacity:0;width:0;height:0}
+.radio-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:10px 14px;border:1.5px solid #d4e4dd;border-radius:10px;font-size:13px;color:#5a7a70;background:#f8faf9;transition:all .2s;font-family:'DM Sans',sans-serif;font-weight:400;text-align:center;user-select:none}
+.dot{width:14px;height:14px;border-radius:50%;border:1.5px solid #c0d4cc;display:inline-block;flex-shrink:0;transition:all .2s}
+.radio-label input:checked + .radio-btn{border-color:#1a6e52;background:linear-gradient(135deg,#f0f9f5,#e6f4ee);color:#0f4638;font-weight:500}
+.radio-label input:checked + .radio-btn .dot{border-color:#1a6e52;background:#1a6e52;box-shadow:inset 0 0 0 2px #fff,inset 0 0 0 5px #1a6e52}
+.radio-label:hover .radio-btn{border-color:#9dc9b6;background:#f2f8f5}
+
+.submit-btn{width:100%;padding:14px;background:linear-gradient(135deg,#0f4638,#1a6e52);color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;border:none;border-radius:12px;cursor:pointer;margin-top:2rem;letter-spacing:.02em;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:10px}
+.submit-btn:hover{background:linear-gradient(135deg,#0a3028,#165e45);box-shadow:0 6px 24px rgba(15,70,56,0.25);transform:translateY(-1px)}
+.submit-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+
+.form-footer{text-align:center;font-size:11px;color:#a0b8ae;margin-top:1.5rem;line-height:1.6;padding-bottom:.5rem}
+
+.success-screen{display:none;text-align:center;padding:3rem 2rem}
+.success-icon{width:64px;height:64px;background:linear-gradient(135deg,#e6f4ee,#c8ebda);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;font-size:28px}
+.success-title{font-family:'Cormorant Garamond',serif;font-size:1.7rem;color:#0f4638;margin-bottom:.6rem}
+.success-text{font-size:14px;color:#5a7a70;line-height:1.6}
+
+.error-msg{display:none;background:#fdeaea;color:#a32d2d;border-radius:10px;padding:10px 14px;font-size:13px;margin-top:1rem;text-align:center}
+
+@media(max-width:500px){
+  .form-header{padding:2rem 1.5rem 1.8rem}
+  .form-body{padding:1.5rem 1.5rem 2rem}
+  .form-title{font-size:1.6rem}
+  .radio-group{flex-direction:column}
+  .radio-label{min-width:unset}
+}
+</style>
+</head>
+<body>
+<div class="form-card">
+  <div class="form-header">
+    <div class="hd1"></div>
+    <div class="hd2"></div>
+    <div class="clinic-badge">⚕ Clínica Odontológica</div>
+    <h1 class="form-title">Atualização de Ficha Clínica</h1>
+    <p class="form-subtitle">Suas respostas nos ajudam a oferecer um cuidado mais personalizado e completo. Preencha com atenção.</p>
+    <div class="progress-wrap"><div class="progress-fill" id="prog"></div></div>
+    <div class="progress-lbl" id="prog-lbl">0 de 9 respondidas</div>
+  </div>
+
+  <div class="form-body" id="form-body">
+    <div class="info-pill">🔒 Dados confidenciais — uso exclusivo da clínica</div>
+
+    <form id="clinicForm" novalidate>
+      <div class="section-lbl">Identificação</div>
+      <div class="field-group">
+        <label class="field-label" for="nome">Nome completo <span class="req">*</span></label>
+        <input class="text-input" type="text" id="nome" name="nome" placeholder="Digite seu nome completo" required autocomplete="name"/>
+      </div>
+
+      <div class="section-lbl">Hábitos de higiene</div>
+      <div class="field-group">
+        <label class="field-label" for="escovacao">Em quais momentos do dia você costuma escovar os dentes? <span class="req">*</span></label>
+        <input class="text-input" type="text" id="escovacao" name="escovacao" placeholder="Ex: manhã, após almoço e antes de dormir" required/>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Durante a escovação ou uso do fio dental, sua gengiva sangra com frequência? <span class="req">*</span></label>
+        <div class="radio-group">
+          <label class="radio-label"><input type="radio" name="gengiva" value="Sim" required><span class="radio-btn"><span class="dot"></span> Sim</span></label>
+          <label class="radio-label"><input type="radio" name="gengiva" value="Não"><span class="radio-btn"><span class="dot"></span> Não</span></label>
+        </div>
+      </div>
+
+      <div class="section-lbl">Sintomas bucais</div>
+      <div class="field-group">
+        <label class="field-label">Sente boca seca e/ou amarga com frequência? <span class="req">*</span></label>
+        <div class="radio-group">
+          <label class="radio-label"><input type="radio" name="bocaSeca" value="Sim" required><span class="radio-btn"><span class="dot"></span> Sim</span></label>
+          <label class="radio-label"><input type="radio" name="bocaSeca" value="Não"><span class="radio-btn"><span class="dot"></span> Não</span></label>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="saliva">Já sentiu alterações na saliva, como na quantidade, viscosidade ou gosto? <span class="req">*</span></label>
+        <input class="text-input" type="text" id="saliva" name="saliva" placeholder="Descreva brevemente, se houver" required/>
+      </div>
+
+      <div class="section-lbl">Saúde sistêmica</div>
+      <div class="field-group">
+        <label class="field-label">Seu sono é fragmentado (acorda várias vezes durante a noite)? <span class="req">*</span></label>
+        <div class="radio-group">
+          <label class="radio-label"><input type="radio" name="sono" value="Sim" required><span class="radio-btn"><span class="dot"></span> Sim</span></label>
+          <label class="radio-label"><input type="radio" name="sono" value="Não"><span class="radio-btn"><span class="dot"></span> Não</span></label>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Apresenta sintomas gástricos, como azia, mau hálito ou gosto ácido na boca? <span class="req">*</span></label>
+        <div class="radio-group">
+          <label class="radio-label"><input type="radio" name="gastrico" value="Sim" required><span class="radio-btn"><span class="dot"></span> Sim</span></label>
+          <label class="radio-label"><input type="radio" name="gastrico" value="Não"><span class="radio-btn"><span class="dot"></span> Não</span></label>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Você ronca ou já foi diagnosticado com apneia do sono? <span class="req">*</span></label>
+        <div class="radio-group">
+          <label class="radio-label"><input type="radio" name="apneia" value="Sim" required><span class="radio-btn"><span class="dot"></span> Sim</span></label>
+          <label class="radio-label"><input type="radio" name="apneia" value="Não"><span class="radio-btn"><span class="dot"></span> Não</span></label>
+        </div>
+      </div>
+
+      <div class="section-lbl">Condições dentárias</div>
+      <div class="field-group">
+        <label class="field-label">Há episódios de trincas, lascas ou fraturas dentárias sem causa aparente? <span class="req">*</span></label>
+        <div class="radio-group">
+          <label class="radio-label"><input type="radio" name="fraturas" value="Sim" required><span class="radio-btn"><span class="dot"></span> Sim</span></label>
+          <label class="radio-label"><input type="radio" name="fraturas" value="Não"><span class="radio-btn"><span class="dot"></span> Não</span></label>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submitBtn">
+        ✉ Enviar ficha clínica
+      </button>
+      <div class="error-msg" id="errorMsg">Ocorreu um erro ao enviar. Verifique sua conexão e tente novamente.</div>
+    </form>
+    <p class="form-footer">Ao enviar, você concorda com o uso dos dados exclusivamente para fins clínicos.<br>Clínica Odontológica — Cuidado que transforma.</p>
+  </div>
+
+  <div class="success-screen" id="successScreen">
+    <div class="success-icon">✓</div>
+    <h2 class="success-title">Ficha recebida com sucesso!</h2>
+    <p class="success-text">Obrigado por preencher sua ficha clínica.<br>Nossa equipe terá todas as informações necessárias para oferecer o melhor atendimento.</p>
+    <p style="font-size:12px;color:#a0b8ae;margin-top:1.5rem">Até breve na clínica 🌿</p>
+  </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────────────────────
+// CONFIGURAÇÃO — cole aqui a URL do seu Apps Script Web App
+// após seguir o tutorial no arquivo GUIA_DE_USO
+// ─────────────────────────────────────────────────────────────
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzyAQY9ueBpmIswyx1zUjr_8XTBbflc6gn8AwGNh9z8mIJWMagjj4Fdz31n4UdQre8x/exec";
+// ─────────────────────────────────────────────────────────────
+
+const TOTAL = 9;
+function countAnswered(){
+  let c = 0;
+  if(document.getElementById('nome').value.trim()) c++;
+  if(document.getElementById('escovacao').value.trim()) c++;
+  if(document.getElementById('saliva').value.trim()) c++;
+  ['gengiva','bocaSeca','sono','gastrico','apneia','fraturas'].forEach(n=>{
+    if(document.querySelector(`input[name="${n}"]:checked`)) c++;
+  });
+  return c;
+}
+function updateProgress(){
+  const ans = countAnswered();
+  document.getElementById('prog').style.width = Math.round(ans/TOTAL*100)+'%';
+  document.getElementById('prog-lbl').textContent = ans+' de '+TOTAL+' respondidas';
+}
+document.querySelectorAll('.text-input').forEach(el=>el.addEventListener('input',updateProgress));
+document.querySelectorAll('input[type=radio]').forEach(el=>el.addEventListener('change',updateProgress));
+
+document.getElementById('clinicForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+  if(countAnswered() < TOTAL){ alert('Por favor, preencha todas as questões antes de enviar.'); return; }
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+  document.getElementById('errorMsg').style.display = 'none';
+
+  const payload = {
+    timestamp: new Date().toLocaleString('pt-BR'),
+    nome:      document.getElementById('nome').value.trim(),
+    escovacao: document.getElementById('escovacao').value.trim(),
+    gengiva:   document.querySelector('input[name="gengiva"]:checked').value,
+    bocaSeca:  document.querySelector('input[name="bocaSeca"]:checked').value,
+    saliva:    document.getElementById('saliva').value.trim(),
+    sono:      document.querySelector('input[name="sono"]:checked').value,
+    gastrico:  document.querySelector('input[name="gastrico"]:checked').value,
+    apneia:    document.querySelector('input[name="apneia"]:checked').value,
+    fraturas:  document.querySelector('input[name="fraturas"]:checked').value,
+  };
+
+  // Se URL não configurada, apenas mostra sucesso (modo demonstração)
+  if(APPS_SCRIPT_URL === "COLE_AQUI_A_URL_DO_SEU_APPS_SCRIPT"){
+    document.getElementById('form-body').style.display='none';
+    document.getElementById('successScreen').style.display='block';
+    return;
+  }
+
+  try {
+    await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(payload)
+    });
+    document.getElementById('form-body').style.display='none';
+    document.getElementById('successScreen').style.display='block';
+  } catch(err) {
+    btn.disabled = false;
+    btn.innerHTML = '✉ Enviar ficha clínica';
+    document.getElementById('errorMsg').style.display = 'block';
+  }
+});
+</script>
+</body>
+</html>
